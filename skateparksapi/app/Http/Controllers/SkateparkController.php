@@ -29,7 +29,7 @@ class SkateparkController extends Controller
      */
     public function store(StoreSkateparkRequest $request)
     {
-        //
+        // 
     }
 
     /**
