@@ -6,6 +6,7 @@ use App\Models\Skatepark;
 use App\Http\Requests\StoreSkateparkRequest;
 use App\Http\Requests\UpdateSkateparkRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SkateparkController extends Controller
 {
@@ -14,11 +15,11 @@ class SkateparkController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|string|unique:users,name',
-                'description' => 'required|string|email|unique:users,email',
-                'private' => 'required|min:8|string',
-                // El same|campo se puede utilizar en otros ambitos 
-                'password_confirmation' => 'required|same:password'
+                'name' => 'required|string|unique:skateparks,name',
+                'description' => 'required|string|min:10|max:255',
+                'private' => 'required|boolean',
+                'favourite' => 'required|boolean',
+                'features'
             ]
         );
 
