@@ -48,6 +48,7 @@ class UserController extends Controller
     // Login
     public function login(Request $request)
     {
+        // Validacion
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -67,9 +68,5 @@ class UserController extends Controller
             $res = ["errors" => "Credentials don't match"];
             return response()->json($res);
         }
- 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SkateparkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('user')->group(function () {
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
+});
+
+// Skateparks
+Route::prefix('skatepark')->group(function () {
+    Route::post('create', [SkateparkController::class, 'create']);
 });
