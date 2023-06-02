@@ -17,8 +17,6 @@ class Spot extends Model
         'name',
         'description',
         'private',
-        'rating',
-        'favourite',
         'features',
         'location',
         'photos',

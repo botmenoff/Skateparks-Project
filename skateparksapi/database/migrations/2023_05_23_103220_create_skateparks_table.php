@@ -16,12 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->boolean('private');
-            $table->integer('rating');
-            $table->boolean('favourite');
-            $table->unsignedBigInteger('features');
-            $table->foreign('features')->references('id')->on('skatepark_features');
+            $table->json('features')->nullable();
             $table->string('location');
-            $table->string('photos')->nullable(); // Add the 'photos' field with nullable constraint
+            $table->json('photos')->nullable(); // Add the 'photos' field with nullable constraint
             $table->unsignedBigInteger('userid');
             $table->foreign('userid')->references('id')->on('users');
             $table->timestamps();

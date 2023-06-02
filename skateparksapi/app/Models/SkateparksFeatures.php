@@ -18,6 +18,8 @@ class SkateparksFeatures extends Model
         'description'
     ];
 
+    public $timestamps = false;
+
     // Relacion
     public function skateparks()
     {

@@ -12,24 +12,18 @@ class SkateparkController extends Controller
 {
     public function create (Request $request) 
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required|string|unique:skateparks,name',
-                'description' => 'required|string|min:10|max:255',
-                'private' => 'required|boolean',
-                'favourite' => 'required|boolean',
-                'features'
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => $request->password,
-                'errors' => $validator->errors()
-            ], 400);
-        }
+        // Obtenemos el user
+        $user = auth()->user();
+        // Creamos el skatepark
+        $skatepark = Skatepark::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'private' => $request->private,
+            'features' => json_encode($request->features),
+            'location' => $request->location,
+            'photos' => $request->photos,
+            'userid' => $user->id,
+        ]);
+        return $skatepark;
     }
 }

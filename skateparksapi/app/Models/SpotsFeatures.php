@@ -9,7 +9,7 @@ class SpotsFeatures extends Model
 {
     use HasFactory;
 
-    protected $table = 'spot-features';
+    protected $table = 'spot_features';
 
     protected $fillable = [
         'name',

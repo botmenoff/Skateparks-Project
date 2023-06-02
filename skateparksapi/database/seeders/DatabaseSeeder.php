@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\SkateparksFeaturesSeeder;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call(UserSeeder::class);
+        //$this->call(UserSeeder::class);
+        $this->call(SkateparksFeaturesSeeder::class);
     }
 }

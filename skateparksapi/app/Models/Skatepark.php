@@ -17,8 +17,6 @@ class Skatepark extends Model
         'name',
         'description',
         'private',
-        'rating',
-        'favourite',
         'features',
         'location',
         'photos',
