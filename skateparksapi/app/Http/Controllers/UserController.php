@@ -37,9 +37,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            //'height' => $request->height,
-            //'weight' => $request->weight,
-            //'sleepHours' => $request->sleepHours
+            'avatar' => 'default.png'
         ]);
 
         return response()->json($user, 201);

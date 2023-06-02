@@ -26,4 +26,11 @@ class SkateparkController extends Controller
         ]);
         return $skatepark;
     }
+
+    public function readPublic ()
+    {
+        // Get all the skateparks that are public
+        $publicSkateparks = Skatepark::where('private', 0)->get();
+        return $publicSkateparks;
+    }
 }

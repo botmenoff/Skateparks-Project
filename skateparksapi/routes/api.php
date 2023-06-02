@@ -28,6 +28,7 @@ Route::prefix('user')->group(function () {
 });
 
 // Skateparks
-Route::prefix('skatepark')->middleware('auth:sanctum')->group(function () {
-    Route::post('create', [SkateparkController::class, 'create'])->middleware(ValidateSkatepark::class);
+Route::prefix('skatepark')->group(function () {
+    Route::post('create', [SkateparkController::class, 'create'])->middleware('auth:sanctum')->middleware(ValidateSkatepark::class);
+    Route::get('get', [SkateparkController::class, 'readPublic']);
 });
