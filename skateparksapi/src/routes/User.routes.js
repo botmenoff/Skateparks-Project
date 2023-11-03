@@ -1,15 +1,9 @@
 const express = require('express');
 const router = express.Router();
+// import the controller functions
+const UserController = require('../controllers/Users.controllers');
 
-router.get('/', (req, res) => {
-  // Implement logic to retrieve and return users
-  res.json({ message: 'List of users' });
-});
-
-router.post('/', (req, res) => {
-  // Implement logic to create a new user
-  const newUser = req.body; // Assuming JSON request body contains user data
-  res.json({ message: 'User created', user: newUser });
-});
+// GetAll users route
+router.get('/getAll', UserController.getAllUsers);
 
 module.exports = router;
