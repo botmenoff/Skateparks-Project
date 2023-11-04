@@ -10,18 +10,18 @@ module.exports = (sequelize) => {
   User.init({
     userName: {
       type: DataTypes.STRING,
-      unique: true, // Indica que el userName debe ser único
-      allowNull: false, // No permite valores nulos
+      unique: true,
+      allowNull: false,
       validate: {
-        isAlphanumeric: true // Puedes añadir otras validaciones según tus necesidades
+        isAlphanumeric: true
       }
     },
     email: {
       type: DataTypes.STRING,
-      unique: true, // Indica que el email debe ser único
-      allowNull: false, // No permite valores nulos
+      unique: true,
+      allowNull: false,
       validate: {
-        isEmail: true // Valida que sea un formato de correo electrónico válido
+        isEmail: true
       }
     },
     password: DataTypes.STRING,
@@ -29,6 +29,20 @@ module.exports = (sequelize) => {
   }, {
     sequelize,
     modelName: 'User',
+    hooks: {
+      beforeValidate: async (user, options) => {
+        const existingUserWithEmail = await User.findOne({ where: { email: user.email } });
+        const existingUserWithUsername = await User.findOne({ where: { userName: user.userName } });
+        
+        if (existingUserWithEmail) {
+          throw new Error('Email is already in use');
+        }
+
+        if (existingUserWithUsername) {
+          throw new Error('Username is already in use');
+        }
+      }
+    }
   });
 
   return User;

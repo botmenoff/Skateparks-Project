@@ -9,3 +9,7 @@ async function hashPassword(password) {
         throw new Error('Error hashing password');
     }
 }
+
+module.exports = {
+    hashPassword,
+}

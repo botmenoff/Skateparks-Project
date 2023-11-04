@@ -1,16 +1,5 @@
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
-const saltRounds = 10;
-
-// HASH PASSWORD MIDDLEWARE
-const hashPasswordMiddleware = async (user) => {
-  try {
-    const hashedPassword = await bcrypt.hash(user.password, saltRounds);
-    user.password = hashedPassword;
-  } catch (error) {
-    throw new Error('Error hashing password');
-  }
-};
 
 // VERIFY DATA OF USER
 const verifyUserData = async (req, res, next) => {
@@ -49,6 +38,5 @@ const verifyUserData = async (req, res, next) => {
 
 // Exportar los middlewares
 module.exports = {
-  hashPasswordMiddleware,
   verifyUserData,
 };
