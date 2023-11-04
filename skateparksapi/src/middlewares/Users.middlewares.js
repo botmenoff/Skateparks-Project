@@ -22,14 +22,14 @@ const verifyUserData = async (req, res, next) => {
         .min(3)
         .max(30)
         .required(),
-      
+
       email: Joi.string()
         .email()
         .required(),
-    
+
       password: Joi.string()
         .pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)
-        .required()
+        .required(),
     });
 
     // Definimos el usuario que nos pasan de la ruta
@@ -38,13 +38,12 @@ const verifyUserData = async (req, res, next) => {
     const { error } = UserSchema.validate(user);
     // Si los datos son correctos pasamos a la ruta
     if (error) {
-      res.status(400).json('Bad request', error);
-      console.error('Validation Error:', error.message);
+      res.status(400).json({'Bad request': error.details});
     } else {
       next();
     }
   } catch (error) {
-    console.log('Unexpected Error:' ,error);
+    res.status(500).json({'Unexpected Error:': error});
   }
 }
 
