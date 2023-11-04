@@ -12,7 +12,7 @@ const getAllUsers = async (req, res) => {
         const users = await User.findAll({
             attributes: ['userName', 'email', 'admin', 'createdAt', 'updatedAt'],
         });
-        res.json(users);
+        res.status(200).json(users);
         console.log(users);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -25,7 +25,7 @@ const getUserById = async (req, res) => {
         const user = await User.findByPk(req.params.id, {
             attributes: ['userName', 'email', 'admin', 'createdAt', 'updatedAt'],
         });
-        res.json(user);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -34,8 +34,10 @@ const getUserById = async (req, res) => {
 // CREATE
 const createUser = async (req, res) => {
     try {
-        const user = await User.create(req.body);
-        res.json(user);
+        const user = await User.create(req.body, {
+            attributes: ['userName', 'email', 'admin', 'createdAt', 'updatedAt'],
+        });
+        res.status(201).json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -46,4 +48,5 @@ const createUser = async (req, res) => {
 module.exports = {
     getAllUsers,
     getUserById,
+    createUser,
 };

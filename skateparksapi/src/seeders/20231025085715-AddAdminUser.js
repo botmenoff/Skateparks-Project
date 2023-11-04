@@ -8,19 +8,19 @@ const plainPassword = process.env.ADMIN_PASSWORD;
 module.exports = {
 
   async up(queryInterface, Sequelize) {
-    // We have to hash the password here because of the async problem with bcrypt
+    // Tenemos que hacer el hash de la contraseña aquí por el problema async con bcrypt
     console.log(plainPassword);
 
-    // Check if the password is empty
+    // Comprobar si la contraseña está vacía
     if (plainPassword === undefined) {
       console.error('Error: Admin password is empty');
       process.exit(1);
     }
 
-    // Make the hash of the password  
+    // Hacer el hash de la contraseña  
     const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
 
-    // Make the insert of the admin user
+    // Hacer la inserción del usuario administrador
     return queryInterface.bulkInsert('Users', [{
       userName: 'Admin',
       email: 'botmenSs@proton.me',
@@ -31,7 +31,7 @@ module.exports = {
     }], {});
   },
 
-  // This is the down function, it will be executed when the migration is rolled back
+  // Esta es la función down, se ejecutará cuando se revierta la migración
   async down(queryInterface, Sequelize) {
     return queryInterface.bulkDelete('Users', { userName: 'admin' }, {});
   }

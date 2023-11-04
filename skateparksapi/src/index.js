@@ -1,5 +1,5 @@
 const express = require('express');
-require('dotenv').config(); // Load environment variables from .env file
+require('dotenv').config(); // Cargar las variables de entorno
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -14,7 +14,7 @@ const skateparksRouter = require('./routes/Skate.routes');
 app.use('/users', usersRouter);
 app.use('/skateparks', skateparksRouter);
 
-// Start the Express server
+// Empezar el servidor
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
