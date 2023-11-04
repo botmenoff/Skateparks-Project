@@ -3,7 +3,8 @@ const router = express.Router();
 // import the controller functions
 const UserController = require('../controllers/Users.controllers');
 
-// GetAll users route
-router.get('/getAll', UserController.getAllUsers);
+// USERS
+router.get('/get', UserController.getAllUsers);
+router.get('/get/:id', UserController.getUserById);
 
 module.exports = router;
