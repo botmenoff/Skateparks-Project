@@ -1,25 +1,27 @@
 'use strict';
-require('dotenv').config(); // Load environment variables from .env file
+
 const bcrypt = require('bcrypt');
-const plainPassword = process.env.ADMIN_PASSWORD;
-let hashedPassword;
+require('dotenv').config();
+
 const saltRounds = 10;
-
-bcrypt.hash(plainPassword, saltRounds, (err, hash) => {
-  if (err) {
-    console.error('Error hashing password:', err);
-  } else {
-    // Store hash in your password DB.
-    hashedPassword = hash;
-    console.log('Hashed Password:', hashedPassword);
-  }
-});
-
+const plainPassword = process.env.ADMIN_PASSWORD;
 module.exports = {
+
   async up(queryInterface, Sequelize) {
+    // Tenemos que hacer el hash de la contraseña aquí por el problema async con bcrypt
+    // Comprobar si la contraseña está vacía
+    if (plainPassword === undefined) {
+      console.error('Error: Admin password is empty');
+      process.exit(1);
+    }
+
+    // Hacer el hash de la contraseña  
+    const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+
+    // Hacer la inserción del usuario administrador
     return queryInterface.bulkInsert('Users', [{
       userName: 'Admin',
-      email: 'admin@example.com',
+      email: 'botmenSs@proton.me',
       password: hashedPassword,
       admin: true,
       createdAt: new Date(),
@@ -27,6 +29,7 @@ module.exports = {
     }], {});
   },
 
+  // Esta es la función down, se ejecutará cuando se revierta la migración
   async down(queryInterface, Sequelize) {
     return queryInterface.bulkDelete('Users', { userName: 'admin' }, {});
   }

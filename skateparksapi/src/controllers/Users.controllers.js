@@ -1,67 +1,63 @@
-const User = require('../models/User.model');
+// Iniciar el sequalize
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('skateparks_db', 'root', '', {
+    host: 'localhost',
+    dialect: 'mysql',
+});
+const User = require('../models/user')(sequelize, Sequelize);
 
-const createUser = async (req, res) => {
-    try {
-        const user = new User(req.body);
-        await user.save();
-        res.status(201).json(user);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
+// Importar el service
+const Services = require('../services/Services.js');
 
-const getUserById = async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.json(user);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
+// GETALL
 const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find();
-        res.json(users);
+        const users = await User.findAll({
+            attributes: ['userName', 'email', 'admin', 'createdAt', 'updatedAt'],
+        });
+        res.status(200).json(users);
+        console.log(users);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-const updateUser = async (req, res) => {
+// GETBYID
+const getUserById = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        Object.assign(user, req.body);
-        await user.save();
-        res.json(user);
+        const user = await User.findByPk(req.params.id, {
+            attributes: ['userName', 'email', 'admin', 'createdAt', 'updatedAt'],
+        });
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-const deleteUser = async (req, res) => {
+// CREATE
+const createUser = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+        // Check if admin field exists
+        console.log(req.body.admin);
+        if (req.body.admin != undefined) {
+            res.status(400).json({ 'Bad request': 'No admin field' });
+        } else {
+            // Hash the password
+            req.body.password = await Services.hashPassword(req.body.password)
+            const user = await User.create(req.body, {
+                attributes: ['userName', 'email', 'admin', 'createdAt', 'updatedAt'],
+            });
+            res.status(201).json(user);
         }
-        await user.remove();
-        res.json({ message: 'User deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
+
+// Exportar los métodos del controlador
 module.exports = {
-    createUser,
-    getUserById,
     getAllUsers,
-    updateUser,
-    deleteUser,
+    getUserById,
+    createUser,
 };

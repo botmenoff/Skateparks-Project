@@ -1,15 +1,13 @@
 const express = require('express');
 const router = express.Router();
+// import the controller functions
+const UserController = require('../controllers/Users.controllers');
+// import the middlewares
+const UsersMiddlewares = require('../middlewares/Users.middlewares');
 
-router.get('/', (req, res) => {
-  // Implement logic to retrieve and return users
-  res.json({ message: 'List of users' });
-});
-
-router.post('/', (req, res) => {
-  // Implement logic to create a new user
-  const newUser = req.body; // Assuming JSON request body contains user data
-  res.json({ message: 'User created', user: newUser });
-});
+// USERS
+router.get('/get', UserController.getAllUsers);
+router.get('/get/:id', UserController.getUserById);
+router.post('/create', UsersMiddlewares.verifyUserData, UserController.createUser);
 
 module.exports = router;
