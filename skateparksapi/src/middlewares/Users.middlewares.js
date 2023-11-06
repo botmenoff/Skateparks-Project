@@ -36,6 +36,12 @@ const verifyUserData = async (req, res, next) => {
   }
 }
 
+// CHECK IF EMAIL IS VALID
+
+
+// CHECK ADMIN
+
+
 // Exportar los middlewares
 module.exports = {
   verifyUserData,

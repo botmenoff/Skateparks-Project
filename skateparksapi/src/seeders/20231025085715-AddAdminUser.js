@@ -9,8 +9,6 @@ module.exports = {
 
   async up(queryInterface, Sequelize) {
     // Tenemos que hacer el hash de la contraseña aquí por el problema async con bcrypt
-    console.log(plainPassword);
-
     // Comprobar si la contraseña está vacía
     if (plainPassword === undefined) {
       console.error('Error: Admin password is empty');
