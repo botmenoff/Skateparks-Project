@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
+const Services = require('../services/Services')
 
 // VERIFY DATA OF USER
 const verifyUserData = async (req, res, next) => {
@@ -37,7 +38,10 @@ const verifyUserData = async (req, res, next) => {
 }
 
 // CHECK IF EMAIL IS VALID
-
+const verifyEmail = async (req, res, next ) => {
+  // Llamar a la funcion de los services
+  Services.sendEmail(req.body.email)
+}
 
 // CHECK ADMIN
 
@@ -45,4 +49,5 @@ const verifyUserData = async (req, res, next) => {
 // Exportar los middlewares
 module.exports = {
   verifyUserData,
+  verifyEmail
 };

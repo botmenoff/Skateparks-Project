@@ -8,6 +8,6 @@ const UsersMiddlewares = require('../middlewares/Users.middlewares');
 // USERS
 router.get('/get', UserController.getAllUsers);
 router.get('/get/:id', UserController.getUserById);
-router.post('/create', UsersMiddlewares.verifyUserData, UserController.createUser);
+router.post('/create', UsersMiddlewares.verifyUserData,UsersMiddlewares.verifyEmail , UserController.createUser);
 
 module.exports = router;
