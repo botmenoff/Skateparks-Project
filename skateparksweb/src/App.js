@@ -1,11 +1,10 @@
-import { Home } from "./Pages/Home";
+import React from 'react';
+import { Home } from "./Pages/Home/Home";
 
 function App() {
   return (
     <div >
-      <p>Learn nothingb =/</p>
-      {/* React router with the paths */}
-      
+      <Home></Home>
     </div>
   );
 }
