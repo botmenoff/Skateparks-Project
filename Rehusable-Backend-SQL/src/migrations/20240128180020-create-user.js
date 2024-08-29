@@ -18,7 +18,16 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      admin: {
+      avatar: {
+        type: Sequelize.STRING
+      },
+      isBanned: {
+        type: Sequelize.BOOLEAN
+      },
+      isAdmin: {
+        type: Sequelize.BOOLEAN
+      },
+      emailVerified: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {
